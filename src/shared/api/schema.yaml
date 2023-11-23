@@ -1,0 +1,480 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Full API - Users, Sessions, Tasks, Boards
+  description: API for managing users, sessions, tasks, and boards
+
+servers:
+  - url: /api
+
+paths:
+  /users:
+    get:
+      operationId: "getUsers"
+      summary: Get all users
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserDto"
+    post:
+      operationId: "createUser"
+      summary: Add a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDto"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserDto"
+
+  /users/{userId}:
+    delete:
+      operationId: "deleteUser"
+      summary: Remove a user by ID
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user to remove
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+
+  /session/me:
+    get:
+      operationId: "getSession"
+      summary: Get current session
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionDto"
+  /session/sign-in:
+    post:
+      operationId: "signIn"
+      summary: Sign in
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignInDto"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionDto"
+
+  /session/sign-out:
+    post:
+      operationId: "signOut"
+      summary: Sign out
+      responses:
+        "200":
+          description: Successful operation
+
+  /tasks:
+    get:
+      operationId: "getTasks"
+      summary: Get all tasks
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskDto"
+    post:
+      operationId: "createTask"
+      summary: Add a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskDto"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskDto"
+
+  /tasks/{taskId}:
+    get:
+      operationId: "getTaskById"
+      summary: Get a task by ID
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to get
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskDto"
+    patch:
+      operationId: "updateTask"
+      summary: Add a new task
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to get
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskDto"
+      responses:
+        "200":
+          description: Successful operation
+    delete:
+      operationId: "deleteTask"
+      summary: Remove a task by ID
+      parameters:
+        - name: taskId
+          in: path
+          description: ID of the task to remove
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+
+  /boards:
+    get:
+      operationId: "getBoards"
+      summary: Get all boards
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BoardPartialDto"
+    post:
+      operationId: "createBoard"
+      summary: Add a new board
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateBoardDto"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardDto"
+  /boards/{boardId}:
+    get:
+      operationId: "getBoardById"
+      summary: Get a board by ID
+      parameters:
+        - name: boardId
+          in: path
+          description: ID of the board to get
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BoardDto"
+    patch:
+      operationId: "updateBoard"
+      summary: Patch a board
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BoardDto"
+      responses:
+        "200":
+          description: Successful operation
+    delete:
+      operationId: "deleteBoard"
+      summary: Remove a board by ID
+      parameters:
+        - name: boardId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+
+components:
+  schemas:
+    UserRole:
+      type: string
+      enum:
+        - admin
+        - user
+    UserDto:
+      type: object
+      required:
+        - id
+        - name
+        - avatarId
+        - email
+        - role
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/UserRole"
+        name:
+          type: string
+        avatarId:
+          type: string
+    CreateUserDto:
+      type: object
+      required:
+        - id
+        - name
+        - avatarId
+        - email
+        - password
+        - role
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          $ref: "#/components/schemas/UserRole"
+        name:
+          type: string
+        avatarId:
+          type: string
+    SignInDto:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    SessionDto:
+      type: object
+      required:
+        - id
+        - name
+        - avatarId
+        - userId
+        - email
+        - role
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        avatarId:
+          type: string
+        userId:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/UserRole"
+
+    CreateBoardDto:
+      type: object
+      required:
+        - name
+        - ownerId
+        - editorsIds
+      properties:
+        name:
+          type: string
+        ownerId:
+          type: string
+        editorsIds:
+          type: array
+          items:
+            type: string
+
+    BoardDto:
+      type: object
+      required:
+        - id
+        - name
+        - cols
+        - ownerId
+        - editorsIds
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cols:
+          type: array
+          items:
+            $ref: "#/components/schemas/BoardColDto"
+        ownerId:
+          type: string
+        editorsIds:
+          type: array
+          items:
+            type: string
+
+    BoardPartialDto:
+      type: object
+      required:
+        - id
+        - name
+        - ownerId
+        - editorsIds
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        ownerId:
+          type: string
+        editorsIds:
+          type: array
+          items:
+            type: string
+
+    BoardPatchDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cols:
+          type: array
+          items:
+            $ref: "#/components/schemas/BoardColDto"
+        ownerId:
+          type: string
+        editorsIds:
+          type: array
+          items:
+            type: string
+
+    BoardColDto:
+      type: object
+      required:
+        - id
+        - name
+        - items
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/BoardCardDto"
+
+    BoardCardDto:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        assigneeId:
+          type: string
+
+    TaskDto:
+      type: object
+      required:
+        - id
+        - title
+        - authorId
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        assigneeId:
+          type: string
+        authorId:
+          type: string
+
+    CreateTaskDto:
+      type: object
+      required:
+        - title
+        - authorId
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        assigneeId:
+          type: string
+        authorId:
+          type: string
+
+    UpdateTaskDto:
+      type: object
+      properties:
+        title:
+          type: string
+        authorId:
+          type: string
+        description:
+          type: string
+        assigneeId:
+          type: string

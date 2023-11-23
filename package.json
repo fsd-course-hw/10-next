@@ -9,11 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.3"
+    "@casl/ability": "^6.5.0",
+    "@headlessui/react": "^1.7.17",
+    "axios": "^1.6.2",
+    "clsx": "^2.0.0",
+    "immer": "^10.0.3",
+    "nanoid": "^5.0.2",
+    "next": "^14.0.3",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
+    "socket.io-client": "^4.7.2",
+    "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-boundaries": "^3.4.1",
+    "@types/node": "^20.8.9",
+    "@types/react-beautiful-dnd": "^13.1.6",
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -22,6 +38,8 @@
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "eslint": "^8",
-    "eslint-config-next": "14.0.3"
+    "eslint-config-next": "14.0.3",
+    "orval": "^6.20.0",
+    "prettier": "^3.0.3"
   }
 }
