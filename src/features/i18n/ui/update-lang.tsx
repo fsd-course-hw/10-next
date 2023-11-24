@@ -1,3 +1,4 @@
+"use client";
 import { Lang, useLang } from "../model/lang.store";
 import { UiSelect } from "@/shared/ui/ui-select-field";
 

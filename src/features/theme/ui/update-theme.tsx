@@ -1,3 +1,4 @@
+"use client";
 import { Theme, useTheme } from "../model/theme.store";
 import { UiSelect } from "@/shared/ui/ui-select-field";
 

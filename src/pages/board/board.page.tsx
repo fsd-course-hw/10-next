@@ -1,3 +1,4 @@
+"use client";
 import {
   Board,
   BoardActions,
@@ -15,18 +16,15 @@ import {
 } from "@/features/manage-board-access";
 import { useBoardPageAblity } from "./model/use-board-page-ablity";
 import { subject } from "@casl/ability";
-import { useRouter } from "next/router";
 
-function useBoard() {
-  const { query } = useRouter();
-  const boardId = query.boardId as string;
+function useBoard({ boardId }: { boardId: string }) {
   const { board, fetchBoard } = useFetchBoard(boardId);
 
   return { board, fetchBoard };
 }
 
-export function BoardPage() {
-  const { board, fetchBoard } = useBoard();
+export function BoardPage({ params }: { params: { boardId: string } }) {
+  const { board, fetchBoard } = useBoard({ boardId: params.boardId });
   const boardPageAbility = useBoardPageAblity();
 
   if (!board) {

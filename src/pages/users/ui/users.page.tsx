@@ -1,3 +1,4 @@
+"use client";
 import { UiCetnerContentLayout } from "@/shared/ui/layouts/ui-center-content-layout";
 import {
   CreateUserForm,

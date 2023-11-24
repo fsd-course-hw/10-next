@@ -4,7 +4,7 @@ import { ROUTER_PATHS } from "@/shared/constants";
 import { useState } from "react";
 import { useI18n } from "../i18n";
 import { useToasts } from "@/shared/lib/toasts";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export function useSignIn() {
   const { t } = useI18n();

@@ -1,4 +1,7 @@
-import { confirmationContext, ConfirmationParams  } from "@/shared/lib/confirmation";
+import {
+  confirmationContext,
+  ConfirmationParams,
+} from "@/shared/lib/confirmation";
 import { useState } from "react";
 import { ConfirmationModal } from "./confirmation-modal";
 import { ConfirmModalParams } from "../model/types";

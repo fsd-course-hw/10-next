@@ -1,6 +1,6 @@
-// Sign in page component
+"use client";
 
-import { SignInForm } from "@/features/auth";
+import { SignInForm } from "@/features/auth/pub/sign-in-form";
 import { useI18n } from "../i18n";
 import clsx from "clsx";
 
