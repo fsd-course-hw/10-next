@@ -1,24 +1,26 @@
 import { Server } from "socket.io";
 
 import express from "express";
-import cors from "cors";
 import { getHandlers } from "./src/handlers";
+import cookieParser from "cookie-parser";
 
-const app = express();
+getHandlers().then((handlers) => {
+  const app = express();
 
-// Enable CORS for all routes
-app.use(cors());
+  // Enable CORS for all routes
+  app.use(cookieParser());
 
-// Parse JSON payloads
-app.use(express.json());
+  // Parse JSON payloads
+  app.use(express.json());
 
-// Endpoint to receive JSON data and send a JSON response
-app.use(await getHandlers());
+  // Endpoint to receive JSON data and send a JSON response
+  app.use(handlers);
 
-const PORT = process.env.PORT || 3333;
+  const PORT = process.env.PORT || 3333;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
 
 const io = new Server(3334, {
@@ -41,4 +43,4 @@ io.on("connection", (socket) => {
   });
 });
 
-console.log("ws server start listen on port 3000");
+console.log("ws server start listen on port 3334");

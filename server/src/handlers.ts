@@ -4,7 +4,9 @@ import {
   CreateBoardDto,
   CreateTaskDto,
   CreateUserDto,
+  LangDto,
   SignInDto,
+  ThemeDto,
   UpdateTaskDto,
 } from "../generated";
 import { sessionRepository } from "./session.repository";
@@ -274,6 +276,34 @@ export const getHandlers = async () => {
     await boardsRepository.removeBoard(boardId);
 
     return ok(res, board);
+  });
+
+  router.get("/api/theme", async (req, res) => {
+    return ok(res, {
+      theme: req.cookies.theme ?? "light",
+    });
+  });
+
+  router.post("/api/theme", async (req, res) => {
+    const body = req.body as ThemeDto;
+    res.cookie("theme", body.theme, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    });
+    return ok(res);
+  });
+
+  router.get("/api/lang", async (req, res) => {
+    return ok(res, {
+      lang: req.cookies.lang ?? "en",
+    });
+  });
+
+  router.post("/api/lang", async (req, res) => {
+    const body = req.body as LangDto;
+    res.cookie("lang", body.lang, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+    });
+    return ok(res);
   });
 
   return router;

@@ -248,6 +248,53 @@ paths:
       responses:
         "200":
           description: Successful operation
+  /lang:
+    get:
+      operationId: "getLang"
+      summary: Get current lang
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LangDto"
+    post:
+      operationId: "setLang"
+      summary: Set current lang
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LangDto"
+      responses:
+        "200":
+          description: Successful operation
+  /theme:
+    get:
+      operationId: "getTheme"
+      summary: Get current theme
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThemeDto"
+    post:
+      operationId: "setTheme"
+      summary: Set current theme
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ThemeDto"
+
+      responses:
+        "200":
+          description: Successful operation
 
 components:
   schemas:
@@ -478,3 +525,24 @@ components:
           type: string
         assigneeId:
           type: string
+
+    ThemeDto:
+      type: object
+      required:
+        - theme
+      properties:
+        theme:
+          type: string
+          enum:
+            - light
+            - dark
+    LangDto:
+      type: object
+      required:
+        - lang
+      properties:
+        lang:
+          type: string
+          enum:
+            - en
+            - ru
