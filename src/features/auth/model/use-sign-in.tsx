@@ -13,22 +13,22 @@ export function useSignIn() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const setCurrentSession = useSession((s) => {
-    return s.setCurrentSession;
-  });
+  const setCurrentSession = useSession((s) => s.setCurrentSession);
 
   const signIn = (signInDto: api.SignInDto) => {
     setIsLoading(true);
     api
       .signIn(signInDto)
-      .then((session) => {
-        setCurrentSession(session);
+      .then(async (session) => {
+        setCurrentSession(await api.getSession());
         addToast({
           message: t("sign-in-success"),
           type: "success",
         });
-        router.push(ROUTER_PATHS.BOARDS);
         return session;
+      })
+      .then(() => {
+        router.push(ROUTER_PATHS.BOARDS);
       })
       .catch(() => {
         setError(t("sign-in-error"));
