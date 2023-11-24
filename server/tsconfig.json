@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "target": "EsNext",
+    "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist"
   },
+  "include": ["**/*.ts"],
   "lib": ["es2015"]
 }

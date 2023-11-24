@@ -7,6 +7,30 @@
  */
 import { createInstance } from "./api-instance";
 import type { BodyType } from "./api-instance";
+export type LangDtoLang = (typeof LangDtoLang)[keyof typeof LangDtoLang];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const LangDtoLang = {
+  en: "en",
+  ru: "ru",
+} as const;
+
+export interface LangDto {
+  lang: LangDtoLang;
+}
+
+export type ThemeDtoTheme = (typeof ThemeDtoTheme)[keyof typeof ThemeDtoTheme];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ThemeDtoTheme = {
+  light: "light",
+  dark: "dark",
+} as const;
+
+export interface ThemeDto {
+  theme: ThemeDtoTheme;
+}
+
 export interface UpdateTaskDto {
   assigneeId?: string;
   authorId?: string;
@@ -337,6 +361,56 @@ export const deleteBoard = (
   );
 };
 
+/**
+ * @summary Get current lang
+ */
+export const getLang = (options?: SecondParameter<typeof createInstance>) => {
+  return createInstance<LangDto>({ url: `/lang`, method: "get" }, options);
+};
+
+/**
+ * @summary Set current lang
+ */
+export const setLang = (
+  langDto: BodyType<LangDto>,
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<void>(
+    {
+      url: `/lang`,
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      data: langDto,
+    },
+    options,
+  );
+};
+
+/**
+ * @summary Get current theme
+ */
+export const getTheme = (options?: SecondParameter<typeof createInstance>) => {
+  return createInstance<ThemeDto>({ url: `/theme`, method: "get" }, options);
+};
+
+/**
+ * @summary Set current theme
+ */
+export const setTheme = (
+  themeDto: BodyType<ThemeDto>,
+  options?: SecondParameter<typeof createInstance>,
+) => {
+  return createInstance<void>(
+    {
+      url: `/theme`,
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      data: themeDto,
+    },
+    options,
+  );
+};
+
 export type GetUsersResult = NonNullable<Awaited<ReturnType<typeof getUsers>>>;
 export type CreateUserResult = NonNullable<
   Awaited<ReturnType<typeof createUser>>
@@ -377,3 +451,7 @@ export type UpdateBoardResult = NonNullable<
 export type DeleteBoardResult = NonNullable<
   Awaited<ReturnType<typeof deleteBoard>>
 >;
+export type GetLangResult = NonNullable<Awaited<ReturnType<typeof getLang>>>;
+export type SetLangResult = NonNullable<Awaited<ReturnType<typeof setLang>>>;
+export type GetThemeResult = NonNullable<Awaited<ReturnType<typeof getTheme>>>;
+export type SetThemeResult = NonNullable<Awaited<ReturnType<typeof setTheme>>>;

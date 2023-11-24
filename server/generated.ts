@@ -5,8 +5,32 @@
  * API for managing users, sessions, tasks, and boards
  * OpenAPI spec version: 1.0.0
  */
-import * as axios from "axios";
+import axios from "axios";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
+export type LangDtoLang = (typeof LangDtoLang)[keyof typeof LangDtoLang];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const LangDtoLang = {
+  en: "en",
+  ru: "ru",
+} as const;
+
+export interface LangDto {
+  lang: LangDtoLang;
+}
+
+export type ThemeDtoTheme = (typeof ThemeDtoTheme)[keyof typeof ThemeDtoTheme];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ThemeDtoTheme = {
+  light: "light",
+  dark: "dark",
+} as const;
+
+export interface ThemeDto {
+  theme: ThemeDtoTheme;
+}
+
 export interface UpdateTaskDto {
   assigneeId?: string;
   authorId?: string;
@@ -114,7 +138,7 @@ export interface UserDto {
 export const getUsers = <TData = AxiosResponse<UserDto[]>>(
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/users`, options);
+  return axios.get(`/users`, options);
 };
 
 /**
@@ -124,7 +148,7 @@ export const createUser = <TData = AxiosResponse<UserDto>>(
   createUserDto: CreateUserDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.post(`/users`, createUserDto, options);
+  return axios.post(`/users`, createUserDto, options);
 };
 
 /**
@@ -134,7 +158,7 @@ export const deleteUser = <TData = AxiosResponse<void>>(
   userId: string,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.delete(`/users/${userId}`, options);
+  return axios.delete(`/users/${userId}`, options);
 };
 
 /**
@@ -143,7 +167,7 @@ export const deleteUser = <TData = AxiosResponse<void>>(
 export const getSession = <TData = AxiosResponse<SessionDto>>(
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/session/me`, options);
+  return axios.get(`/session/me`, options);
 };
 
 /**
@@ -153,7 +177,7 @@ export const signIn = <TData = AxiosResponse<SessionDto>>(
   signInDto: SignInDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.post(`/session/sign-in`, signInDto, options);
+  return axios.post(`/session/sign-in`, signInDto, options);
 };
 
 /**
@@ -162,7 +186,7 @@ export const signIn = <TData = AxiosResponse<SessionDto>>(
 export const signOut = <TData = AxiosResponse<void>>(
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.post(`/session/sign-out`, undefined, options);
+  return axios.post(`/session/sign-out`, undefined, options);
 };
 
 /**
@@ -171,7 +195,7 @@ export const signOut = <TData = AxiosResponse<void>>(
 export const getTasks = <TData = AxiosResponse<TaskDto[]>>(
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/tasks`, options);
+  return axios.get(`/tasks`, options);
 };
 
 /**
@@ -181,7 +205,7 @@ export const createTask = <TData = AxiosResponse<TaskDto>>(
   createTaskDto: CreateTaskDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.post(`/tasks`, createTaskDto, options);
+  return axios.post(`/tasks`, createTaskDto, options);
 };
 
 /**
@@ -191,7 +215,7 @@ export const getTaskById = <TData = AxiosResponse<TaskDto>>(
   taskId: string,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/tasks/${taskId}`, options);
+  return axios.get(`/tasks/${taskId}`, options);
 };
 
 /**
@@ -202,7 +226,7 @@ export const updateTask = <TData = AxiosResponse<void>>(
   updateTaskDto: UpdateTaskDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.patch(`/tasks/${taskId}`, updateTaskDto, options);
+  return axios.patch(`/tasks/${taskId}`, updateTaskDto, options);
 };
 
 /**
@@ -212,7 +236,7 @@ export const deleteTask = <TData = AxiosResponse<void>>(
   taskId: string,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.delete(`/tasks/${taskId}`, options);
+  return axios.delete(`/tasks/${taskId}`, options);
 };
 
 /**
@@ -221,7 +245,7 @@ export const deleteTask = <TData = AxiosResponse<void>>(
 export const getBoards = <TData = AxiosResponse<BoardPartialDto[]>>(
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/boards`, options);
+  return axios.get(`/boards`, options);
 };
 
 /**
@@ -231,7 +255,7 @@ export const createBoard = <TData = AxiosResponse<BoardDto>>(
   createBoardDto: CreateBoardDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.post(`/boards`, createBoardDto, options);
+  return axios.post(`/boards`, createBoardDto, options);
 };
 
 /**
@@ -241,7 +265,7 @@ export const getBoardById = <TData = AxiosResponse<BoardDto>>(
   boardId: string,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.get(`/boards/${boardId}`, options);
+  return axios.get(`/boards/${boardId}`, options);
 };
 
 /**
@@ -252,7 +276,7 @@ export const updateBoard = <TData = AxiosResponse<void>>(
   boardDto: BoardDto,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.patch(`/boards/${boardId}`, boardDto, options);
+  return axios.patch(`/boards/${boardId}`, boardDto, options);
 };
 
 /**
@@ -262,7 +286,45 @@ export const deleteBoard = <TData = AxiosResponse<void>>(
   boardId: string,
   options?: AxiosRequestConfig,
 ): Promise<TData> => {
-  return axios.default.delete(`/boards/${boardId}`, options);
+  return axios.delete(`/boards/${boardId}`, options);
+};
+
+/**
+ * @summary Get current lang
+ */
+export const getLang = <TData = AxiosResponse<LangDto>>(
+  options?: AxiosRequestConfig,
+): Promise<TData> => {
+  return axios.get(`/lang`, options);
+};
+
+/**
+ * @summary Set current lang
+ */
+export const setLang = <TData = AxiosResponse<void>>(
+  langDto: LangDto,
+  options?: AxiosRequestConfig,
+): Promise<TData> => {
+  return axios.post(`/lang`, langDto, options);
+};
+
+/**
+ * @summary Get current theme
+ */
+export const getTheme = <TData = AxiosResponse<ThemeDto>>(
+  options?: AxiosRequestConfig,
+): Promise<TData> => {
+  return axios.get(`/theme`, options);
+};
+
+/**
+ * @summary Set current theme
+ */
+export const setTheme = <TData = AxiosResponse<void>>(
+  themeDto: ThemeDto,
+  options?: AxiosRequestConfig,
+): Promise<TData> => {
+  return axios.post(`/theme`, themeDto, options);
 };
 
 export type GetUsersResult = AxiosResponse<UserDto[]>;
@@ -281,3 +343,7 @@ export type CreateBoardResult = AxiosResponse<BoardDto>;
 export type GetBoardByIdResult = AxiosResponse<BoardDto>;
 export type UpdateBoardResult = AxiosResponse<void>;
 export type DeleteBoardResult = AxiosResponse<void>;
+export type GetLangResult = AxiosResponse<LangDto>;
+export type SetLangResult = AxiosResponse<void>;
+export type GetThemeResult = AxiosResponse<ThemeDto>;
+export type SetThemeResult = AxiosResponse<void>;
