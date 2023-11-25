@@ -19,8 +19,8 @@ export const createStoreContext = <S, P = void>(
     return <context.Provider value={store}>{children}</context.Provider>;
   };
 
-  const useStore = <R,>(selector: (store: S) => R) => {
-    return useStrictContext(context)(selector);
+  const useStore = <R = S,>(selector?: (store: S) => R) => {
+    return useStrictContext(context)(selector ?? ((s) => s as unknown as R));
   };
 
   return {
