@@ -13,6 +13,7 @@ import { sessionRepository } from "./session.repository";
 import { tasksRepository } from "./tasks.repository";
 import { boardsRepository } from "./boards.repository";
 import { Response, Router } from "express";
+import { persistStorage } from "./storage";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -279,30 +280,30 @@ export const getHandlers = async () => {
   });
 
   router.get("/api/theme", async (req, res) => {
-    return ok(res, {
-      theme: req.cookies.theme ?? "light",
-    });
+    return ok(
+      res,
+      await persistStorage.getItemSafe<ThemeDto>("theme", { theme: "light" }),
+    );
   });
 
   router.post("/api/theme", async (req, res) => {
     const body = req.body as ThemeDto;
-    res.cookie("theme", body.theme, {
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-    });
+
+    await persistStorage.setItemSafe("theme", body);
+
     return ok(res);
   });
 
   router.get("/api/lang", async (req, res) => {
-    return ok(res, {
-      lang: req.cookies.lang ?? "en",
-    });
+    return ok(
+      res,
+      await persistStorage.getItemSafe<LangDto>("lang", { lang: "ru" }),
+    );
   });
 
   router.post("/api/lang", async (req, res) => {
     const body = req.body as LangDto;
-    res.cookie("lang", body.lang, {
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-    });
+    await persistStorage.setItemSafe("lang", body);
     return ok(res);
   });
 
