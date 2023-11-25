@@ -88,7 +88,7 @@ export function CreateUserForm({ className }: { className?: string }) {
             label="Выберете аватар пользователя"
             value={value}
             onChange={onChange}
-            getSrc={getAvatarUrl}
+            getSrc={(v) => getAvatarUrl(v).src}
             images={Array.from({ length: 8 }, (_, i) => i + 1)}
             error={fieldState.error?.message}
           />
