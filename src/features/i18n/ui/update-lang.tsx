@@ -12,7 +12,7 @@ const langOptions: LangOption[] = [
 ];
 
 export function UpdateLang({ className }: { className?: string }) {
-  const { lang, setLang } = useLang();
+  const { lang, setLang } = useLang((s) => s);
 
   const langOption = langOptions.find((option) => option.id === lang);
   const onChangeLang = (lang: LangOption) => {

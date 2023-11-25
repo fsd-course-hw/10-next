@@ -3,7 +3,7 @@ import { getAvatarUrl } from "@/entities/user";
 import Image from "next/image";
 
 export function Profile() {
-  const { currentSession } = useSession();
+  const { currentSession } = useSession((s) => s);
 
   if (!currentSession) return null;
 

@@ -1,23 +1,21 @@
+import { api } from "@/shared/api";
+import { createStoreContext } from "@/shared/lib/zustand";
 import { create } from "zustand";
 
 export type Theme = "light" | "dark";
 
 type ThemeStore = {
-  isLoading: boolean;
   theme: Theme;
-  loadTheme: () => void;
   setTheme: (theme: Theme) => void;
 };
 
-export const useTheme = create<ThemeStore>((set, get) => ({
-  isLoading: true,
-  theme: "light",
-  loadTheme: async () => {
-    const theme = (localStorage.getItem("theme") as Theme) ?? get().theme;
-    set({ theme, isLoading: false });
-  },
-  setTheme: (theme) => {
-    localStorage.setItem("theme", theme);
-    set({ theme });
-  },
-}));
+export const { useStore: useTheme, Provider: ThemeProvider } =
+  createStoreContext(({ theme }: { theme?: Theme }) =>
+    create<ThemeStore>((set) => ({
+      theme: theme ?? "light",
+      setTheme: (theme) => {
+        set({ theme });
+        api.setTheme({ theme }).catch();
+      },
+    })),
+  );
